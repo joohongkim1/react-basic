@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-
+// 하나의 input 값 관리
 function InputSample() {
     const [text, setText] = useState('');
     
