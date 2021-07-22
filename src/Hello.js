@@ -7,6 +7,7 @@ function Hello({color, name, isSpecial }) {
             color,
             padding: "1rem"
         }}>
+            
             {isSpecial ? <b>*</b> : null}
             {/* 단순히 보여주고 숨기고를 판별 시에는 && 연산자가 더 효율적 */}
             {isSpecial && <b>**</b>}
