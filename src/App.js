@@ -74,6 +74,7 @@ function App() {
 
   const onToggle = id => {
     // 클릭 시 상태 업데이트
+    // 불변성 유지 필수
     setUsers(users.map(
       user => user.id === id
       ? { ...user, active: !user.active }
