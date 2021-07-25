@@ -25,17 +25,20 @@ function App() {
     {
         id: 1,
         username: 'kim',
-        email: "test@test.com"
+        email: "test@test.com",
+        active: true,
     },
     {
         id: 2,
         username: 'lee',
-        email: "test@test2.com" 
+        email: "test@test2.com",
+        active: false, 
     },
     {
         id: 3,
         username: 'park',
-        email: "test@test3.com"
+        email: "test@test3.com",
+        active: false,
     }
   ]);
   
@@ -62,7 +65,21 @@ function App() {
       email: '',
     });
     nextId.current += 1;
-  }
+  };
+
+  const onRemove = id => {
+    // 유저 삭제
+    setUsers(users.filter(user => user.id !== id))
+  };
+
+  const onToggle = id => {
+    // 클릭 시 상태 업데이트
+    setUsers(users.map(
+      user => user.id === id
+      ? { ...user, active: !user.active }
+      : user
+    ))
+  };
 
   return (
     <>
@@ -78,7 +95,7 @@ function App() {
         onChange={onChange} 
         onCreate={onCreate} 
       />
-      <UserList users={users}/>
+      <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
     </>
   );
 }
