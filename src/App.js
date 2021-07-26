@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState, useMemo, useCallback } from 'react';
 import Counter from './Counter';
 import CreateUser from './CreateUser';
 import InputMulti from './InputMulti';
@@ -21,13 +21,16 @@ function App() {
   });
   const {username, email} = inputs;
 
-  const onChange = e => {
+  // useCallback -> 해당 함수는 deps 가 변경될 때만 함수가 새로 생성
+  // 그렇지 않으면 기존에 만든 함수 재사용
+  const onChange = useCallback(e => {
     const { name, value } = e.target;
     setInputs({
       ...inputs,
       [name]: value,
     });
-  }
+  // 해당 함수가 관리하고 있는 값을 deps 에 넣어준다.
+  }, [inputs]);
 
   const [users, setUsers] = useState([
     {
@@ -55,7 +58,7 @@ function App() {
   // 해당 값 업데이트 시 컴포넌트가 리렌더링되지 않는다.
   const nextId = useRef(4);
 
-  const onCreate = () => {
+  const onCreate = useCallback(() => {
     const user = {
       id: nextId.current,
       username,
@@ -73,14 +76,14 @@ function App() {
       email: '',
     });
     nextId.current += 1;
-  };
+  }, [username, email, users]);
 
-  const onRemove = id => {
+  const onRemove = useCallback(id => {
     // 유저 삭제
     setUsers(users.filter(user => user.id !== id))
-  };
+  }, [users]);
 
-  const onToggle = id => {
+  const onToggle = useCallback(id => {
     // 클릭 시 상태 업데이트
     // 불변성 유지 필수
     setUsers(users.map(
@@ -88,7 +91,7 @@ function App() {
       ? { ...user, active: !user.active }
       : user
     ))
-  };
+  }, [users]);
 
   // 첫번째 파라미터는 함수 형태
   // 두번째 파라미터는 deps
