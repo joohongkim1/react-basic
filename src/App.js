@@ -1,9 +1,17 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useMemo } from 'react';
 import Counter from './Counter';
 import CreateUser from './CreateUser';
 import InputMulti from './InputMulti';
 import InputSample from './InputSample';
 import UserList from './UserList';
+
+// useMemo Hook - 특정 값이 변경된 경우에만 특정 함수 실행하여 연산 처리
+// 원하는 값이 바뀌지 않았다면 리렌더링시 이전의 값을 재사용할 수 있게 해줌
+function countActiveUsers(users) {
+  console.log('활성 사용자 수를 세는중...');
+  return users.filter(user => user.active === true).length;
+  
+}
 
 function App() {
   
@@ -82,6 +90,11 @@ function App() {
     ))
   };
 
+  // 첫번째 파라미터는 함수 형태
+  // 두번째 파라미터는 deps
+  // users 가 바뀔 때에만 호출이 되고, 그렇지 않을 경우 이전의 값 재사용
+  const count = useMemo(() => countActiveUsers(users), [users]);
+
   return (
     <>
       <Counter />
@@ -97,6 +110,7 @@ function App() {
         onCreate={onCreate} 
       />
       <UserList users={users} onRemove={onRemove} onToggle={onToggle}/>
+      <div>활성 사용자 수: {count}</div>
     </>
   );
 }
