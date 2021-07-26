@@ -68,7 +68,7 @@ function App() {
     // 배열의 불변성 유지
     // 배열 항목 추가 2가지 방법
     // setUsers([...users, user]);
-    setUsers(users.concat(user));
+    setUsers(users => users.concat(user));
 
     // 유저 생성 시 input 초기화
     setInputs({
@@ -76,22 +76,23 @@ function App() {
       email: '',
     });
     nextId.current += 1;
-  }, [username, email, users]);
+  }, [username, email]);
 
   const onRemove = useCallback(id => {
     // 유저 삭제
-    setUsers(users.filter(user => user.id !== id))
-  }, [users]);
+    setUsers(users => users.filter(user => user.id !== id))
+  }, []);
 
   const onToggle = useCallback(id => {
     // 클릭 시 상태 업데이트
     // 불변성 유지 필수
-    setUsers(users.map(
+    // 함수형 업데이트
+    setUsers(users => users.map(
       user => user.id === id
       ? { ...user, active: !user.active }
       : user
     ))
-  }, [users]);
+  }, []);
 
   // 첫번째 파라미터는 함수 형태
   // 두번째 파라미터는 deps
