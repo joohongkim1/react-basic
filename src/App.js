@@ -1,10 +1,14 @@
 import React from 'react';
+import Counter from './Counter';
 import MyComponent from './MyComponent';
+import Say from './Say';
 
 const App = () => {
   return (
     <div>
-      <MyComponent>Children</MyComponent>
+      <MyComponent favoriteNumber={1}>Children</MyComponent>
+      <Counter />
+      <Say />
     </div>
   );
 };
