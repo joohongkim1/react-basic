@@ -16,7 +16,7 @@ const IterationSample = () => {
 
   const onChange = (e) => setInputText(e.target.value);
   const onClick = () => {
-    // concat 을 사용하여 불변성 유지
+    // concat 을 사용하여 불변성 유지.
     // push 는 기존 배열 변경, concat 은 새 배열 생성
     const nextNames = names.concat({
       id: nextId,
